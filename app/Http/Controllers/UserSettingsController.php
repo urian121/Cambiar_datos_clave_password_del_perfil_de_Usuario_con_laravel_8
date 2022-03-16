@@ -25,7 +25,6 @@ class UserSettingsController extends Controller
         $userPassword   = $user->password;
 
         if($request->password_actual !=""){
-            $PassActual = $request->password_actual;
             $NuewPass   = $request->password;
             $confirPass = $request->confirm_password;
             $name       = $request->name;
@@ -40,7 +39,7 @@ class UserSettingsController extends Controller
                             $user->password = Hash::make($request->password);
                             $sqlBD = DB::table('users')
                                   ->where('id', $user->id)
-                                  ->update(['password' => $user->password]);
+                                  ->update(['password' => $user->password], ['name' => $user->name]);
                     
                             return redirect()->back()->with('updateClave','La clave fue cambiada correctamente.');
                         }else{
